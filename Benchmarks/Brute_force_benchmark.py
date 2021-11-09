@@ -9,16 +9,16 @@ def benchmark_case(amount):
     print('{} points test'.format(amount))
 
     stopwatch = 0
-    stopwatch += benchmark(data, query[0], 1, amount)
-    stopwatch += benchmark(data, query[1], 2, amount)
-    stopwatch += benchmark(data, query[2], 3, amount)
+
+    for index in range(0, 10, 1):
+        stopwatch += benchmark(data, query[index], index+1, amount)
 
     print('{} points case ends in {} seconds'.format(amount, stopwatch))
     np.save('Output/Brute_force/Brute_force_Time_{}.npy'.format(amount), np.array(stopwatch/3))
     return stopwatch
 
 
-# @profile
+#@profile
 def benchmark(data, query, attempt, amount):
     start = time.perf_counter()
     output = bfs.knn_search(data, query, 100)[0]
@@ -37,8 +37,8 @@ def run_benchmark():
     print('Running "Bruteforce search" benchmark')
     stopwatch = 0
     # stopwatch += benchmark_case(1000)
-    stopwatch += benchmark_case(1000)
-    stopwatch += benchmark_case(10000)
+    #stopwatch += benchmark_case(1000)
+    #stopwatch += benchmark_case(10000)
     stopwatch += benchmark_case(100000)
     print('"Bruteforce search" benchmark ends in {} seconds'.format(stopwatch))
     print('===============================================================')

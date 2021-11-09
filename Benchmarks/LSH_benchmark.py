@@ -3,10 +3,10 @@ import lsh
 import numpy as np
 
 
-def benchmark_case(amount, nb_projections=10, nb_tables=10, quantization=10):
+def benchmark_case(amount, nb_projections=10, nb_tables=10, quantization=1):
     data = np.load('Tests/case_{}.npy'.format(amount))
     query = np.load('Tests/query_{}.npy'.format(amount))
-    print('{} points test'.format(amount))
+    print('{} points test, {} projections, {} tables'.format(amount, nb_projections, nb_tables))
 
     start = time.perf_counter()
     built_hash = lsh.LSH(nb_projections, nb_tables, quantization)
@@ -15,9 +15,8 @@ def benchmark_case(amount, nb_projections=10, nb_tables=10, quantization=10):
     stopwatch = end - start
     print('built in {} seconds'.format(stopwatch))
 
-    stopwatch += benchmark(built_hash, query[0], 1, amount, nb_projections, nb_tables, quantization)
-    stopwatch += benchmark(built_hash, query[1], 2, amount, nb_projections, nb_tables, quantization)
-    stopwatch += benchmark(built_hash, query[2], 3, amount, nb_projections, nb_tables, quantization)
+    for index in range(0, 10, 1):
+        stopwatch += benchmark(built_hash, query[index], index+1, amount, nb_projections, nb_tables, quantization)
 
     print('{} points case ends in {} seconds'.format(amount, stopwatch))
     np.save('Output/LSH/LSH_Time_{}_{}_{}_{}.npy'.format(amount, nb_projections, nb_tables, quantization), np.array(stopwatch/3))
@@ -25,7 +24,7 @@ def benchmark_case(amount, nb_projections=10, nb_tables=10, quantization=10):
     return stopwatch
 
 
-# @profile
+#@profile
 def benchmark(built_hash, query, attempt, amount, nb_projections, nb_tables, quantization):
     start = time.perf_counter()
     output = built_hash.search(query, 100)[1]
@@ -46,7 +45,20 @@ def run_benchmark():
     # stopwatch += benchmark_case(100)
     # stopwatch += benchmark_case(1000)
     # stopwatch += benchmark_case(10000)
-    stopwatch += benchmark_case(100000)
+    # stopwatch += benchmark_case(100000)
+
+    for np_tables in range(2, 5, 1):
+        benchmark_case(100000, 2, np_tables)
+
+    print('===============================================================')
+
+    for np_tables in range(2, 5, 1):
+        benchmark_case(100000, 5, np_tables)
+
+    print('===============================================================')
+
+    for np_tables in range(2, 5, 1):
+        benchmark_case(100000, 10, np_tables)
 
     print('"LSH" benchmark ends in {} seconds'.format(stopwatch))
     print('===============================================================')

@@ -47,7 +47,7 @@ def run_benchmark():
     #stopwatch += benchmark_case(1000)
     #stopwatch += benchmark_case(10000)
     #stopwatch += benchmark_case(100000)
-    for leaf_size in range(1, 10, 3):
+    for leaf_size in range(1, 11, 3):
         benchmark_case(10000, leaf_size)
     print('"KDTree" benchmark ends in {} seconds'.format(stopwatch))
     print('===============================================================')
