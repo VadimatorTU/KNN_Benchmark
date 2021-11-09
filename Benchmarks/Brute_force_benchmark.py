@@ -38,3 +38,4 @@ def run_benchmark():
     stopwatch += benchmark_case(10000)
     stopwatch += benchmark_case(100000)
     print('"Bruteforce search" benchmark ends in {} seconds'.format(stopwatch))
+    print('===============================================================')

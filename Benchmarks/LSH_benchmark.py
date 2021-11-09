@@ -3,13 +3,13 @@ import lsh
 import numpy as np
 
 
-def benchmark_case(dim):
-    data = np.load('Tests/case_{}.npy'.format(dim))
-    query = np.load('Tests/query_{}.npy'.format(dim))
-    print('{} dimensional test'.format(dim))
+def benchmark_case(amount, nb_projections=10, nb_tables=10, quantization=10):
+    data = np.load('Tests/case_{}.npy'.format(amount))
+    query = np.load('Tests/query_{}.npy'.format(amount))
+    print('{} points test'.format(amount))
 
     start = time.perf_counter()
-    built_hash = lsh.LSH(10, 10, 10)
+    built_hash = lsh.LSH(nb_projections, nb_tables, quantization)
     built_hash.build(data)
     end = time.perf_counter()
     stopwatch = end - start
@@ -19,7 +19,7 @@ def benchmark_case(dim):
     stopwatch += benchmark(built_hash, query[1], 2)
     stopwatch += benchmark(built_hash, query[2], 3)
 
-    print('{} dimensional case ends in {} seconds'.format(dim, stopwatch))
+    print('{} points case ends in {} seconds'.format(amount, stopwatch))
     return stopwatch
 
 
@@ -40,7 +40,7 @@ def benchmark(built_hash, query, attempt):
 def run_benchmark():
     print('Running "LSH" benchmark')
     stopwatch = 0
-    #stopwatch += benchmark_case(100)
+    # stopwatch += benchmark_case(100)
     stopwatch += benchmark_case(1000)
     stopwatch += benchmark_case(10000)
     stopwatch += benchmark_case(100000)
