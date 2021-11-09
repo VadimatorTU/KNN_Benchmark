@@ -19,7 +19,7 @@ def benchmark_case(amount, nb_projections=10, nb_tables=10, quantization=1):
         stopwatch += benchmark(built_hash, query[index], index+1, amount, nb_projections, nb_tables, quantization)
 
     print('{} points case ends in {} seconds'.format(amount, stopwatch))
-    np.save('Output/LSH/LSH_Time_{}_{}_{}_{}.npy'.format(amount, nb_projections, nb_tables, quantization), np.array(stopwatch/3))
+    np.save('Output/LSH/LSH_Time_{}_{}_{}.npy'.format(amount, nb_projections, nb_tables), np.array(stopwatch/3))
 
     return stopwatch
 
@@ -33,7 +33,8 @@ def benchmark(built_hash, query, attempt, amount, nb_projections, nb_tables, qua
     # print(np.sort(output))
     time_result = end - start
 
-    np.save('Output/LSH/LSH_{}_{}_{}_{}_{}.npy'.format(amount, nb_projections, nb_tables, quantization, attempt), output)
+    ## amount, projections, tables,
+    np.save('Output/LSH/LSH_{}_{}_{}_{}.npy'.format(amount, nb_projections, nb_tables, attempt), output)
     del start, end, output
     print('attempt {} ends in {} seconds'.format(attempt, time_result))
     return time_result

@@ -1,5 +1,5 @@
 import numpy as np
-DIM = 20
+DIM = 40
 
 
 def generate_case(point, dim):
