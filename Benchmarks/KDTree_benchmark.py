@@ -2,6 +2,7 @@ import time
 import kdtree
 import numpy as np
 
+
 def benchmark_case(amount, leaf_size=1):
     data = np.load('Tests/case_{}.npy'.format(amount))
     query = np.load('Tests/query_{}.npy'.format(amount))
@@ -28,8 +29,9 @@ def benchmark(built_hash, query, attempt):
     output = built_hash.search(query, 100)[1]
     end = time.perf_counter()
 
-    print(np.sort(output))
+    #print(np.sort(output))
     time_result = end - start
+    np.save('', output)
 
     del start, end, output
     print('attempt {} ends in {} seconds'.format(attempt, time_result))
@@ -40,8 +42,10 @@ def run_benchmark():
     print('Running "KDTree" benchmark')
     stopwatch = 0
     # stopwatch += benchmark_case(100)
-    stopwatch += benchmark_case(1000)
-    stopwatch += benchmark_case(10000)
-    stopwatch += benchmark_case(100000)
+    #stopwatch += benchmark_case(1000)
+    #stopwatch += benchmark_case(10000)
+    #stopwatch += benchmark_case(100000)
+    for leaf_size in range(1, 10, 3):
+        benchmark_case(10000, leaf_size)
     print('"KDTree" benchmark ends in {} seconds'.format(stopwatch))
     print('===============================================================')
