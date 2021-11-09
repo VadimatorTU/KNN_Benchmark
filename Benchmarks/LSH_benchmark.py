@@ -34,7 +34,7 @@ def benchmark(built_hash, query, attempt, amount, nb_projections, nb_tables, qua
     # print(np.sort(output))
     time_result = end - start
 
-    np.save('Output/LSH/LSH_{}_{}_{}_{}.npy'.format(amount, nb_projections, nb_tables, quantization, attempt), output)
+    np.save('Output/LSH/LSH_{}_{}_{}_{}_{}.npy'.format(amount, nb_projections, nb_tables, quantization, attempt), output)
     del start, end, output
     print('attempt {} ends in {} seconds'.format(attempt, time_result))
     return time_result
