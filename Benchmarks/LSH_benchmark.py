@@ -2,7 +2,7 @@ import time
 import lsh
 import numpy as np
 
-
+@profile
 def benchmark_case(amount, nb_projections=10, nb_tables=10, quantization=1):
     data = np.load('Tests/case_{}.npy'.format(amount))
     query = np.load('Tests/query_{}.npy'.format(amount))
@@ -19,7 +19,7 @@ def benchmark_case(amount, nb_projections=10, nb_tables=10, quantization=1):
         stopwatch += benchmark(built_hash, query[index], index+1, amount, nb_projections, nb_tables, quantization)
 
     print('{} points case ends in {} seconds'.format(amount, stopwatch))
-    np.save('Output/LSH/LSH_Time_{}_{}_{}.npy'.format(amount, nb_projections, nb_tables), np.array(stopwatch/3))
+    np.save('Output/LSH/LSH_Time_{}_{}_{}.npy'.format(amount, nb_projections, nb_tables), np.array(stopwatch/10))
 
     return stopwatch
 
@@ -48,18 +48,28 @@ def run_benchmark():
     # stopwatch += benchmark_case(10000)
     # stopwatch += benchmark_case(100000)
 
-    for np_tables in range(2, 5, 1):
-        benchmark_case(100000, 2, np_tables)
+    """for np_tables in range(2, 5, 1):
+        benchmark_case(1000000, 2, np_tables)
 
     print('===============================================================')
 
     for np_tables in range(2, 5, 1):
-        benchmark_case(100000, 5, np_tables)
+        benchmark_case(1000000, 5, np_tables)
 
     print('===============================================================')
 
     for np_tables in range(2, 5, 1):
-        benchmark_case(100000, 10, np_tables)
+        benchmark_case(1000000, 10, np_tables)
 
-    print('"LSH" benchmark ends in {} seconds'.format(stopwatch))
-    print('===============================================================')
+    print('"LSH" benchmark ends in {} seconds'.format(stopwatch))"""
+
+    #benchmark_case(100000, 2, 2)
+    #benchmark_case(100000, 2, 3)
+    #benchmark_case(100000, 2, 4)
+    #benchmark_case(100000, 5, 2)
+    #benchmark_case(100000, 5, 3)
+    #benchmark_case(100000, 5, 4)
+    #benchmark_case(100000, 10, 2)
+    #benchmark_case(100000, 10, 3)
+    benchmark_case(100000, 10, 4)
+print('===============================================================')

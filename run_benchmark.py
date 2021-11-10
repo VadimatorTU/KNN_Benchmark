@@ -4,5 +4,5 @@ import Benchmarks.KDTree_benchmark as KD
 
 
 BF.run_benchmark()
-#KD.run_benchmark()
+KD.run_benchmark()
 LSH.run_benchmark()

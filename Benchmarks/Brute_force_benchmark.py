@@ -3,6 +3,7 @@ import brute_force_search as bfs
 import numpy as np
 
 
+@profile
 def benchmark_case(amount):
     data = np.load('Tests/case_{}.npy'.format(amount))
     query = np.load('Tests/query_{}.npy'.format(amount))
@@ -14,9 +15,8 @@ def benchmark_case(amount):
         stopwatch += benchmark(data, query[index], index+1, amount)
 
     print('{} points case ends in {} seconds'.format(amount, stopwatch))
-    np.save('Output/Brute_force/Brute_force_Time_{}.npy'.format(amount), np.array(stopwatch/3))
+    np.save('Output/Brute_force/Brute_force_Time_{}.npy'.format(amount), np.array(stopwatch/10))
     return stopwatch
-
 
 #@profile
 def benchmark(data, query, attempt, amount):
